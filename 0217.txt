@@ -1,0 +1,167 @@
+IO 결과를 저장
+
+상대경로 : 상대의 위치에 따라 변하는 경로
+절대경로 : 상대의 위치와 상관없이 항상 같은 경로	
+
+자바에서 FileOutputStream으로 파일에 입력을 하면 저장된 값은 바이너리 코드로 저장된다.
+바이너리 코드이기 떄문에 깨져서 나온다
+
+바이너리 코드를 출력할려면 FileInputStream으로 받아오면된다.
+		int[] num = {1,4,-2,5,-34};
+		byte[] b = {51,52,53,54,55};
+		int c =0;
+		while ((c=fileIn.read())!= -1) {
+			System.out.print(c+" ");
+		}
+평범하게 이렇게 하면 바이트의 크기로 값이 나온다
+1 4 254 5 222 51 52 53 54 55  =->254 = -1
+
+-1을 가져올려면 DataInputStream, DataOutputStream 을 사용하면 된다.
+
+		try {
+			DataOutputStream out = new DataOutputStream(new FileOutputStream("data.txt"));
+			
+			out.writeInt(99);
+			out.writeBoolean(false);
+			out.writeDouble(3.15);
+			out.writeInt(-1);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			DataInputStream in = new  DataInputStream(new FileInputStream("data.txt"));
+			System.out.println(in.readInt());
+			System.out.println(in.readBoolean());
+			System.out.println(in.readDouble());
+			System.out.println(in.readInt());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+문자 스트림은 Reader, Writer로 끝난다
+ 유니코드로 되어있는 문자를 입력하는 스트림이다.
+문자로 표현되지 않는 데이터는 사용할 수 없다(이미지, 동영상,...)
+InputStreamReader, OutputStreamWriter 이다.
+바이트로 읽는다.( 문자로)
+문자를 바이트 크기로 인코딩한다.
+FileReader, FileWriter
+
+
+FileInputStream fin = new FileInputStream("test.txt");
+InputStreamReader in = new InputStreamReader(fin,"MS949"); 
+test.txt의 인코딩 형식을 맞춰서 Read하는것이다. UTF-8이면 MS949가 아닌 UTF-8을 입력하면된다.
+
+
+
+InputStreamReader in = new InputStreamReader(System.in);
+읽어온걸 1바이트씩 씀
+//		파일에 문자를 쓰는 객체 선언
+		FileWriter fOut = null;
+in에 쓴걸 FileWriter에 하나씩 입력
+//			키보드로 입력받은 객체를 -1(끝)까지 입력받음
+			while ((c = in.read())!=-1) {
+				fOut.write(c);
+			}
+
+
+	버퍼를 이용한 입출력
+	버퍼를 가진 스크립
+	이를 통해 1바이트의 처리가 아닌 버퍼를 통해서 프로그램에 전달
+	바이트버퍼 : BufferedInputStream / BufferedOutputStream
+	문자버퍼(유니코드와 문자데이터만 처리) : BufferdReader / BufferdWrite
+
+
+버퍼는 반드시 flush를 해줘야 한다.
+파일 복제를 하는거는 flush를 안해도 되지만 내용변경을 하는 경우 해야한다.
+
+-------------------------------------------------------------------------------------------
+마방진 가로세로대각선 역대각선 모든 행렬의 값이 같은거 = 스도쿠
+int[][] a = {
+	[][][]
+	[][][]
+	[][][]
+	[][][]
+}
+int[][] a = new int[4][3];
+
+a.length = 4;	//row의 길이
+a[0].length = 3;	//col의 길이
+
+{
+	int[] a =new int[3];
+	int[] aa = new int[] {1,2,3};
+	int[] aaa = {1,2,3};
+	
+	int[][] d = new int[3][3];
+	int[][] dd = {
+			{},
+			{},
+			{}
+			
+	};
+	int[][] ddd = new int[][] {
+		new int[] {1,2,3},
+		new int[] {1,2,3},
+		new int[] {1,2,3}
+	};
+}
+
+-------------------------------------------------------------------------------------------
+
+마방진 만드는 방법
+1. 초기값 위치 : row = 0, col = col/2; =1;
+2.로직 : [col-1, row-1] = 2
+	if col-1 or row-1 이 음수면 배열의 최대크기를 입력한다.
+	만약 이동하는 곳에 값이 있다면(0이 아니라면) 초기 배열 인덱스에서 x-1을 해준다.
+	row나 col이 음수면 최대값으로 변경해준다.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

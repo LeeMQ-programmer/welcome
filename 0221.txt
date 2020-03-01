@@ -1,0 +1,119 @@
+JDBC(Java DataBase Connective)
+ - 미들웨어인 RDBMS 프로그래밍 언어를 통해 접근하게 데이터 값을 사용
+java.sql로 이뤄져있어 try-catch(sqlException)가 일어난다
+
+
+
+
+driver loading : Class.forName(""); Oracle을 연결하기 위한 Class 파일을 로딩
+
+connection :	java.sql.Connection conn
+		url : jdbc:oracle:thin:@주소.포트:디비이름
+    		      jdbc:oracle:thin:@localhost:1521:XE
+		username :계정 (ex)nobrand)
+		password : 비밀번호(ex)nobrand)
+
+query 준비 : java.sql.PreaPareStatement psmt (쿼리준비 영역) ? 로 값을 넣는 영역을 표시
+인덱스번호는 1번부터
+statement: CreateStatement / PreparedStatement / CallableStement	
+ex)로그인(id,pw)를 입력받아서 select 하는 query 실행하는 상황
+CreateStatement(Full Binding 기법)
+String query = "SELECT ID,NAME 
+		FROM MEMBER 
+		WHERE ID = ' "+ID+" 'AND PW = ' "+PW+" ' ";
+
+PreparedStatement(Binding) 
+String query = "SELECT ID,NAME 
+		FROM MEMBER 
+		WHERE ID = ? PW = ?";
+psmt.setString(1,id);      ** sqlException을 피할수있다.
+psmt.setString(2,pw);
+
+CallableStement : PL/SQL을 실행 시킬때 사용한다.
+
+query 실행 : 
+	select : psmt.executeQuery(); -> ResultSet
+	insert : update랑 같음
+	update : psmt.executeUpdate(); -> 성공한 row갯수를 반환 int형 
+	selete : update랑 같음
+
+result(select 쿼리 실행만) : java.sql.ResultSet rs -> Iterator 패턴으로 값을 표출
+
+Closes : 닫는순서는 열린 순서의 반대로 닫는다.
+rs.close(); -> psmt.close(); -> conn.close();
+
+
+----------------------------------------------------------------
+CTAS( Create table As Select)
+테이블 복사 NOT NULL 제약조건은 제외한 모든 제약조건은 복사되지 않음
+값은 모두 복사
+
+CREATE TABLE JOB_HISTORY AS SELECT * FROM hr.JOB_HISTORY ;  
+: hr에 있는 JOB_HISTORY에 있는 모든 값을 내 테이블에 JOB_HISTORY로 생성
+
+권한 불충분으로 복사가 되지 않을 떄 hr계정으로 로그인후
+SELECT 권한을 NOBRAND에게 주면된다.
+GRANT SELECT ON JOB_HISTROY TO NOBRAND;
+
+
+해당 테이블 오른쪽 클릭 후 테이터 내보내기 하면 가능
+
+해당 테이블 DDL에 들어가 CREATE 문을 복사 후 내 스크립에 넣어 실행해 테이블 생성
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
